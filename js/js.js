@@ -4,70 +4,67 @@ $(document).ready(function() {
     $(document).on("mobileinit", function() {
         $.mobile.selectmenu.prototype.options.nativeMenu = false;
     });
-    $('#op_summary').on('click', '.go', function() {
-        var num = $(this).attr('name').slice(4, 5);
-        console.log(num);
-        window.location = '#here' + num;
-    });
-
-    $('#op_summary').on('focusout', '.title', function() {
-        var num = $(this).attr('name').slice(4, 5);
-        text = $(this).val();
-        $('#here' + num).html('<h2>' + text + '</h2>');
-    });
     
-    if (ls.getItem('1opsCount') !== null) {
-        opsCount = ls.getItem('1opsCount');
-        for (i = 1; i <= opsCount; i++) {
-            if (i !== 1) {
-                $('#op_summary tr').eq(1).clone().find('input').val('').end()
-                        .appendTo('#op_summary')
-                        .find("*[name]")
-                        .each(function() {
-                    $(this).attr("name", $(this).attr("name").replace(($(this).attr("name").charAt(4)), i));
-                });
-            }
+//    $('#op_summary').on('focusout', '.title', function() {
+//        var num = $(this).attr('name').slice(4, 5);
+//        text = $(this).val();
+//        $('#here' + num).html('<h2>' + text + '</h2>');
+//    });
+//    
+//    if (ls.getItem('1opsCount') !== null) {
+//        opsCount = ls.getItem('1opsCount');
+//        for (i = 1; i <= opsCount; i++) {
+//            if (i !== 1) {
+//                $('#op_summary tr').eq(1).clone().find('input').val('').end()
+//                        .appendTo('#op_summary')
+//                        .find("*[name]")
+//                        .each(function() {
+//                    $(this).attr("name", $(this).attr("name").replace(($(this).attr("name").charAt(4)), i));
+//                });
+//            }
+//
+//            cloneDiv = $('#default_operation').clone();
+//            cloneDiv.appendTo('#input_form')
+//                    .css('display', 'block')
+//                    .attr('id', 'operation_' + i);
+//            cloneDiv.find('h2').html(ls.getItem('spec_form/spec_form:ops' + i + '_name'));
+//
+//            cloneDiv.find('*[name]').each(function() {
+//                var new_name = $(this).attr("name").slice(0, 4) + i + $(this).attr("name").slice(5);
+//                this.name = new_name;
+//                this.id = new_name;
+//            });
+//            cloneDiv.find(':button.btn_clone').each(function() {
+//                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
+//                this.id = new_id;
+//            });
+//            cloneDiv.find('table.tbl_clone').each(function() {
+//                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
+//                this.id = new_id;
+//
+//            });
+//
+//        }
+//    } else {
+//        opsCount = 1;
+//    }
 
-            cloneDiv = $('#default_operation').clone();
-            cloneDiv.appendTo('#input_form')
-                    .css('display', 'block')
-                    .attr('id', 'operation_' + i);
-            cloneDiv.find('h2').html(ls.getItem('spec_form/spec_form:ops' + i + '_name'));
-
-            cloneDiv.find('*[name]').each(function() {
-                var new_name = $(this).attr("name").slice(0, 4) + i + $(this).attr("name").slice(5);
-                this.name = new_name;
-                this.id = new_name;
-            });
-            cloneDiv.find(':button.btn_clone').each(function() {
-                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
-                this.id = new_id;
-            });
-            cloneDiv.find('table.tbl_clone').each(function() {
-                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
-                this.id = new_id;
-
-            });
-
-        }
-    } else {
-        opsCount = 1;
-    }
+var i = 1;
     $('#input_form').on('click', '#add_op', function() {
-        opsCount++;
-        cloneOp = $('#op_summary tr').eq(1).clone().find('input').val('').end()
-                .appendTo('#op_summary')
+        i++;
+        cloneOp = $('#op_summary').clone().find('input').val('').end()
+                .appendTo('#input_form')
                 .find("*[name]")
                 .each(function() {
-            $(this).attr("name", $(this).attr("name").replace(($(this).attr("name").charAt(4)), opsCount));
+            $(this).attr("name", $(this).attr("name").replace(($(this).attr("name").charAt(4)), i));
         });
-        
-        cloneDiv = $('#default_operation').clone();
+        alert();
+        cloneDiv = $('#indent_1').clone();
         cloneDiv.appendTo('#input_form')
-                .prepend('<h2>' + ls.getItem('spec_form/spec_form:ops' + i + '_name') + '</h2>')
                 .css('display', 'block')
-                .attr('id', 'operation_' + i)
+                .attr('id', 'indent_' + i)
                 .sisyphus({timeout: 5});
+        
         cloneDiv.find('*[name]').each(function() {
             var new_name = $(this).attr("name").slice(0, 4) + i + $(this).attr("name").slice(5);
             this.name = new_name;
@@ -82,7 +79,8 @@ $(document).ready(function() {
             this.id = new_id;    
 
         });
-        ls.setItem('1opsCount', opsCount);
+       
+//        ls.setItem('1opsCount', opsCount);
 
     });
     $('#input_form').on('click', '#rm_op', function() {
@@ -95,31 +93,31 @@ $(document).ready(function() {
     });
 
 
-    $('#gen_form').click(function() {
-        for (var i = 1; i <= opsCount; i++) {
-            cloneDiv = $('#default_operation').clone();
-            cloneDiv.appendTo('#input_form')
-                    .prepend('<h2>' + ls.getItem('spec_form/spec_form:ops' + i + '_name') + '</h2>')
-                    .css('display', 'block')
-                    .attr('id', 'operation_' + i)
-                    .sisyphus({timeout: 5});
-            cloneDiv.find('*[name]').each(function() {
-                var new_name = $(this).attr("name").slice(0, 4) + i + $(this).attr("name").slice(5);
-                this.name = new_name;
-                this.id = new_name;
-                console.log('name: ' + this.name + ' id: ' + this.id);
-            });
-            cloneDiv.find(':button.btn_clone').each(function() {
-                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
-                this.id = new_id;
-            });
-            cloneDiv.find('table.tbl_clone').each(function() {
-                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
-                this.id = new_id;
-
-            });
-        }
-    });
+//    $('#gen_form').click(function() {
+//        for (var i = 1; i <= opsCount; i++) {
+//            cloneDiv = $('#default_operation').clone();
+//            cloneDiv.appendTo('#input_form')
+//                    .prepend('<h2>' + ls.getItem('spec_form/spec_form:ops' + i + '_name') + '</h2>')
+//                    .css('display', 'block')
+//                    .attr('id', 'operation_' + i)
+//                    .sisyphus({timeout: 5});
+//            cloneDiv.find('*[name]').each(function() {
+//                var new_name = $(this).attr("name").slice(0, 4) + i + $(this).attr("name").slice(5);
+//                this.name = new_name;
+//                this.id = new_name;
+//                console.log('name: ' + this.name + ' id: ' + this.id);
+//            });
+//            cloneDiv.find(':button.btn_clone').each(function() {
+//                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
+//                this.id = new_id;
+//            });
+//            cloneDiv.find('table.tbl_clone').each(function() {
+//                var new_id = $(this).attr("id").slice(0, 6) + i + $(this).attr("id").slice(7);
+//                this.id = new_id;
+//
+//            });
+//        }
+//    });
 
     $('#input_form').on('click', '.btn_clone', function() {
         var b_id = $(this).attr('id');

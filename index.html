@@ -103,13 +103,12 @@
 
                         <!--<input type="button" id="gen_form" value="Insert Operation Details" />-->
 
-                        <div class='indent_1'>
+                        <div class='indent_1' id='indent_1'>
                             <h4>
                                 Input Parameters
                             </h4>
-                            <div id="add_input_param" class='float'>+ Add Input Parameter</div>
-                            
-                            <table id="t_:ops1/6/1" class='tbl_clone hide'>
+
+                            <table id="t_:ops1/6/1" class='tbl_clone'>
                                 <thead>
                                     <tr>
                                         <th>Parameter</th>
@@ -141,10 +140,12 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>     
+                            </table>   
+                            <input type="button" id="b_:ops1/6/1" class='btn_clone' value="+ Add Input Parameter" data-inline="true" />
+
                             <div id="head_ipProObj">
                                 <h4>
-                                Input Structure of Private Request Object
+                                    Input Structure of Private Request Object
                                 </h4>
 
                                 <fieldset>
