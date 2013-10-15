@@ -57,8 +57,13 @@ audio{
 }
 
 .indent_1{
-    padding-left:100px;
+    padding-left:5%;
 }
+
+.indent_2{
+    margin-left:5%;
+}
+
 .float{
     width:100px;
         border:1px solid #ccc;
